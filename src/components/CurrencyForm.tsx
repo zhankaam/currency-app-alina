@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { convertAmount, getAmountError, getCurrencyOptions } from '../utils';
 import { Amount } from './Amount';
@@ -6,9 +7,9 @@ import { CurrencySwitcher } from './CurrencySwitcher';
 import { Result } from './Result';
 
 interface IProps {
-   base: string;
-   rates:  {[key: string]: number}
-  }
+  base: string;
+  rates: { [key: string]: number };
+}
 
 export const CurrencyForm: FC<IProps> = ({ base, rates }) => {
   const [amount, setAmount] = useState('1');
@@ -41,8 +42,8 @@ export const CurrencyForm: FC<IProps> = ({ base, rates }) => {
     e.preventDefault();
 
     const newValue = convertAmount(base, rates, amount, from?.label, to?.label);
-    console.log({newValue});
-    
+    console.log({ newValue });
+
     setResultValue(newValue);
   };
 
@@ -62,9 +63,11 @@ export const CurrencyForm: FC<IProps> = ({ base, rates }) => {
         value={to}
         onChange={handleToChange}
       />
-      <input className="button" type="submit" value="Submit" />
+      <Button variant="contained" type="submit">
+        Submit
+      </Button>
 
       <Result value={resultValue} />
     </form>
   );
-}
+};

@@ -1,18 +1,12 @@
 const isNumeric = (n: any) => !isNaN(parseFloat(n)) && isFinite(n);
 
-const getCurrencyRate = (currency: any, base: string, rates: any) => {
-  debugger
-  return  currency === base ? 1 : rates[currency]
-};
+const getCurrencyRate = (currency: any, base: string, rates: any) => currency === base ? 1 : rates[currency];
 
 export const convertAmount = (base: string, rates: any, amount: any, from: any, to: any) => {
   if (!from || !to) return 0;
 
-  debugger
   const fromRate = getCurrencyRate(from, base, rates);
-  debugger
   const toRate = getCurrencyRate(to, base, rates);
-  debugger
   return (toRate * amount) / fromRate;
 };
 

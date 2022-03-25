@@ -1,14 +1,15 @@
 import React from 'react';
-import Select, { components } from 'react-select';
+import { Autocomplete, TextField } from '@mui/material';
+import Select, { components, StylesConfig } from 'react-select';
 import { SelectCustomOption } from './SelectCustomOption';
 
-export const CustomComponent = (Comp: any) => (props: any) => {
-  return (
-    <Comp {...props}>
-      <SelectCustomOption {...props.data} />
-    </Comp>
-  );
-};
+// export const CustomComponent = (Comp: any) => (props: any) => {
+//   return (
+//     <Comp {...props}>
+//       <SelectCustomOption {...props.data} />
+//     </Comp>
+//   );
+// };
 
 export const CurrencySelector = ({
   label,
@@ -25,19 +26,28 @@ export const CurrencySelector = ({
     onChange(selectedOption);
   };
 
+  console.log({ label, options, value, onChange });
+
   return (
     <label>
-      {label && <div className="label">{`${label}:`}</div>}
+      {/* <Autocomplete
+        // disablePortal
+        value={value}
+        onChange={handleChange}
+        options={options}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label={label} />}
+      /> */}
       <Select
         className="react-select-container"
         isClearable={true}
         value={value}
         onChange={handleChange}
         options={options}
-        components={{
-          Option: CustomComponent(components.Option),
-          SingleValue: CustomComponent(components.SingleValue),
-        }}
+        // components={{
+        //   Option: CustomComponent(components.Option),
+        //   SingleValue: CustomComponent(components.SingleValue),
+        // }}
       />
     </label>
   );

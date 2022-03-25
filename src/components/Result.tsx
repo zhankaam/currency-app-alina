@@ -1,8 +1,7 @@
+import { TextField } from "@mui/material";
+
 export const Result = ({ value = 0 }) => {
   return (
-    <label className="result">
-      <div className="label">Converted to:</div>
-      <input type="text" value={value} disabled={true} />
-    </label>
+      <TextField type="text" value={value} label="Converted to:" variant="outlined" />
   );
 };
