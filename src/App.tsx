@@ -10,8 +10,6 @@ import './App.css';
 const API_ACCESS_KEY = process.env.REACT_APP_API_ACCESS_KEY;
 const API_URL = process.env.REACT_APP_CURRENCY_API_URL;
 
-// http://data.fixer.io/api/latest?access_key=33c24d225ff84ed532870bc3370aaf9c
-
 function App() {
   const [data, setData] = useState<IResponse>({
     success: false,

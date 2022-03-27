@@ -5,6 +5,7 @@ import { CurrencyInput } from './CurrencyInput';
 
 const CurrencySelectorContainer = styled('div')({
   display: 'flex',
+  justifyContent: 'space-around',
   margin: '30px',
 });
 
