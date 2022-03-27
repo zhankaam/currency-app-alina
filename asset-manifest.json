@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/currency-app-alina/static/css/main.964fdded.css",
-    "main.js": "/currency-app-alina/static/js/main.66dea2d1.js",
+    "main.js": "/currency-app-alina/static/js/main.8bbdd86a.js",
     "index.html": "/currency-app-alina/index.html",
     "main.964fdded.css.map": "/currency-app-alina/static/css/main.964fdded.css.map",
-    "main.66dea2d1.js.map": "/currency-app-alina/static/js/main.66dea2d1.js.map"
+    "main.8bbdd86a.js.map": "/currency-app-alina/static/js/main.8bbdd86a.js.map"
   },
   "entrypoints": [
     "static/css/main.964fdded.css",
-    "static/js/main.66dea2d1.js"
+    "static/js/main.8bbdd86a.js"
   ]
 }
