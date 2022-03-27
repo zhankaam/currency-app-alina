@@ -1,15 +1,14 @@
-import React from "react";
+import React, { FC } from 'react';
 import CompareArrowsSharpIcon from '@mui/icons-material/CompareArrowsSharp';
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 
-export const CurrencySwitcher = ({ disabled, onSwitch }: {disabled: any, onSwitch: any}) => {
-  return <Button
-    variant="contained"
-    type="button"
-    className="button switch-currency"
-    disabled={!!disabled}
-    onClick={onSwitch}
-  >
-   <CompareArrowsSharpIcon />
-  </Button>;
-};
+interface IProps {
+  disabled: boolean;
+  onSwitch: () => void;
+}
+
+export const CurrencySwitcher: FC<IProps> = ({ disabled, onSwitch }) => (
+  <Button variant="contained" type="button" disabled={!!disabled} onClick={onSwitch}>
+    <CompareArrowsSharpIcon />
+  </Button>
+);

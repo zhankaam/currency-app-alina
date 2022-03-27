@@ -1,10 +1,12 @@
-import { Button } from '@mui/material';
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { convertAmount, getAmountError, getCurrencyOptions } from '../utils';
-import { Amount } from './Amount';
-import { CurrencySelector } from './CurrencySelector';
+import React, { FC, useState } from 'react';
 import { CurrencySwitcher } from './CurrencySwitcher';
-import { Result } from './Result';
+import { styled } from '@mui/system';
+import { CurrencyInput } from './CurrencyInput';
+
+const CurrencySelectorContainer = styled('div')({
+  display: 'flex',
+  margin: '30px',
+});
 
 interface IProps {
   base: string;
@@ -12,62 +14,57 @@ interface IProps {
 }
 
 export const CurrencyForm: FC<IProps> = ({ base, rates }) => {
-  const [amount, setAmount] = useState('1');
-  const [error, setError] = useState<string | undefined>('');
-  const [from, setFrom] = useState<any | null>(null);
-  const [to, setTo] = useState<any | null>(null);
-  const [resultValue, setResultValue] = useState<number>();
+  const [amount1, setAmount1] = useState(0);
+  const [amount2, setAmount2] = useState(0);
+  const [currency1, setCurrency1] = useState('USD');
+  const [currency2, setCurrency2] = useState('EUR');
 
-  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const error = getAmountError(value);
-    setError(error);
-    setAmount(value);
+  const format = (num: number) => num.toFixed(4);
+
+  const onAmount1Change = (amount1: number) => {
+    setAmount2(Number(format((amount1 * rates[currency2]) / rates[currency1])));
+    setAmount1(amount1);
   };
 
-  const handleFromChange = (from: any) => {
-    setFrom(from);
+  const onCurrency1Change = (currency1: string) => {
+    setAmount2(Number(format((amount1 * rates[currency2]) / rates[currency1])));
+    setCurrency1(currency1);
   };
 
-  const handleToChange = (to: any) => {
-    setTo(to);
+  const onAmount2Change = (amount2: number) => {
+    setAmount1(Number(format((amount2 * rates[currency1]) / rates[currency2])));
+    setAmount2(amount2);
+  };
+
+  const onCurrency2Change = (currency2: string) => {
+    setAmount1(Number(format((amount2 * rates[currency1]) / rates[currency2])));
+    setCurrency2(currency2);
   };
 
   const handleSwitch = () => {
-    setFrom(to);
-    setTo(from);
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const newValue = convertAmount(base, rates, amount, from?.label, to?.label);
-    console.log({ newValue });
-
-    setResultValue(newValue);
+    setCurrency1(currency2);
+    setCurrency2(currency1);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Amount error={error} value={amount} onChange={handleAmountChange} />
-      <CurrencySelector
-        label="From"
-        options={getCurrencyOptions(rates, from)}
-        value={from}
-        onChange={handleFromChange}
+    <CurrencySelectorContainer>
+      <CurrencyInput
+        onAmountChange={onAmount1Change}
+        onCurrencyChange={onCurrency1Change}
+        currencies={Object.keys(rates)}
+        amount={amount1}
+        currency={currency1}
       />
-      <CurrencySwitcher disabled={!from || !to} onSwitch={handleSwitch} />
-      <CurrencySelector
-        label="To"
-        options={getCurrencyOptions(rates, to)}
-        value={to}
-        onChange={handleToChange}
-      />
-      <Button variant="contained" type="submit">
-        Submit
-      </Button>
 
-      <Result value={resultValue} />
-    </form>
+      <CurrencySwitcher disabled={!currency1 || !currency2} onSwitch={handleSwitch} />
+
+      <CurrencyInput
+        onAmountChange={onAmount2Change}
+        onCurrencyChange={onCurrency2Change}
+        currencies={Object.keys(rates)}
+        amount={amount2}
+        currency={currency2}
+      />
+    </CurrencySelectorContainer>
   );
 };

@@ -1,13 +1,14 @@
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import './App.css';
 import { CurrencyForm } from './components/CurrencyForm';
-import { Error } from './components/Error';
-import { LoadingIcon } from './components/Loading';
 import { IResponse } from './types';
+import { Typography } from '@mui/material';
+import { Loader } from './components/loader';
+import { ErrorSnackbar } from './components/error-snackbar';
+import './App.css';
 
 const API_ACCESS_KEY = process.env.REACT_APP_API_ACCESS_KEY;
-export const API_URL = `${process.env.REACT_APP_CURRENCY_API_URL}latest?access_key=${API_ACCESS_KEY}`;
+const API_URL = process.env.REACT_APP_CURRENCY_API_URL;
 
 // http://data.fixer.io/api/latest?access_key=33c24d225ff84ed532870bc3370aaf9c
 
@@ -15,20 +16,21 @@ function App() {
   const [data, setData] = useState<IResponse>({
     success: false,
     timestamp: 0,
-    base: "",
-    date: "",
-    rates: {}
+    base: '',
+    date: '',
+    rates: {},
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { base, rates } = data;
 
   const getCurrencyconvertTor = async () => {
     setIsLoading(true);
 
-    const {data} = await axios.get(
-      `http://data.fixer.io/api/latest?access_key=33c24d225ff84ed532870bc3370aaf9c`
+    const { data } = await axios.get(
+      `${API_URL}latest?access_key=${API_ACCESS_KEY}`
     );
-    
+
     if (data.success) {
       setData(data);
       setIsLoading(false);
@@ -36,27 +38,22 @@ function App() {
       setError(data.error.info);
       setIsLoading(false);
     }
-
   };
 
   useEffect(() => {
     getCurrencyconvertTor();
   }, []);
 
-  if (error) {
-    return <Error message={error} />;
-  }
-
-  if (isLoading) {
-    return <LoadingIcon />;
-  }
-
   return (
     <div className="App">
-      <h1 className="cc-title">Currency Converter</h1>
-      {error}
+      <Typography variant="h3" component="div" gutterBottom>
+        Currency Converter
+      </Typography>
 
-      <CurrencyForm base={data.base} rates={data.rates} />
+      <Loader isLoading={isLoading} />
+      <ErrorSnackbar error={error} setError={setError} />
+
+      <CurrencyForm base={base} rates={rates} />
     </div>
   );
 }
