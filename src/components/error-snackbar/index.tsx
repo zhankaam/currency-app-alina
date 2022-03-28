@@ -1,8 +1,5 @@
 import { Snackbar, Alert } from '@mui/material';
 import React, { FC } from 'react';
-// import { useDispatch } from "react-redux";
-// import { useTypedSelector } from "../../store";
-// import { setError } from "../../store/modules/result/action-creator";
 
 interface IProps {
   error: string;
@@ -10,8 +7,6 @@ interface IProps {
 }
 
 export const ErrorSnackbar: FC<IProps> = ({ error, setError }) => {
-  // const error = useTypedSelector(({ results }) => results.error);
-  // const dispatch = useDispatch();
 
   const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -19,7 +14,6 @@ export const ErrorSnackbar: FC<IProps> = ({ error, setError }) => {
     }
 
     setError('');
-    // dispatch(setError(null));
   };
 
   return (
