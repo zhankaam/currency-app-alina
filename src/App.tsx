@@ -4,8 +4,8 @@ import { IResponse } from './types';
 import { Typography } from '@mui/material';
 import { Loader } from './components/loader';
 import { ErrorSnackbar } from './components/error-snackbar';
-import './App.css';
 import { CurrencyForm } from './components/currency-form/CurrencyForm';
+import './App.css';
 
 const API_ACCESS_KEY = process.env.REACT_APP_API_ACCESS_KEY;
 const API_URL = process.env.REACT_APP_CURRENCY_API_URL;
